@@ -17,7 +17,8 @@ def main():
         print("\nGastos por mês")
         print("--------------")
 
-        for mes, valor in gastos_mensais.items():
+        for mes in sorted(gastos_mensais):
+            valor = gastos_mensais[mes]
             print(f"{mes} → R$ {valor:.2f}")
 
     except ValueError as erro:
