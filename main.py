@@ -1,12 +1,15 @@
 from leitor_csv import carregar_transacoes
-from relatorio import gerar_resumo, gastos_por_mes
+from relatorio import gerar_resumo, gastos_por_mes, gastos_por_categoria
 from grafico import gerar_grafico
+
 
 def main():
     try:
         transacoes = carregar_transacoes("dados/extrato.csv")
+
         resumo = gerar_resumo(transacoes)
         gastos_mensais = gastos_por_mes(transacoes)
+        gastos_categoria = gastos_por_categoria(transacoes)
 
         print("Resumo Financeiro")
         print("-----------------")
@@ -16,17 +19,20 @@ def main():
 
         print("\nGastos por mês")
         print("--------------")
-
         for mes in sorted(gastos_mensais):
-            valor = gastos_mensais[mes]
-            print(f"{mes} → R$ {valor:.2f}")
+            print(f"{mes} → R$ {gastos_mensais[mes]:.2f}")
 
-        # ✅ AQUI é o lugar correto
+        print("\nGastos por categoria")
+        print("--------------------")
+        for categoria, valor in gastos_categoria.items():
+            print(f"{categoria} → R$ {valor:.2f}")
+
         gerar_grafico(gastos_mensais)
 
     except ValueError as erro:
         print("Erro ao processar o arquivo.")
         print(erro)
+
 
 if __name__ == "__main__":
     main()

@@ -10,8 +10,16 @@ def carregar_transacoes(caminho):
             try:
                 valor_convertido = float(linha["valor"])
                 linha["valor"] = valor_convertido
+
+                categoria = linha["categoria"].strip()
+                if not categoria:
+                    raise ValueError(f"Categoria vazia na linha: {linha}")
+
+                linha["categoria"] = categoria
+
                 transacoes.append(linha)
+
             except ValueError:
-                raise ValueError(f"Erro ao converter valor na linha: {linha}")
+                raise ValueError(f"Erro ao processar linha: {linha}")
 
     return transacoes

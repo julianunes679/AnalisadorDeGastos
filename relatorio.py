@@ -17,10 +17,11 @@ def gerar_resumo(transacoes):
         "media": media
     }
 
+
 def gastos_por_mes(transacoes):
     resumo_mensal = {}
 
-    for transacao in transacoes: 
+    for transacao in transacoes:
         data = transacao["data"]
         valor = transacao["valor"]
 
@@ -29,6 +30,21 @@ def gastos_por_mes(transacoes):
         if mes not in resumo_mensal:
             resumo_mensal[mes] = 0
 
-            resumo_mensal[mes] += valor
+        resumo_mensal[mes] += valor
 
-        return resumo_mensal
+    return resumo_mensal
+
+
+def gastos_por_categoria(transacoes):
+    resumo = {}
+
+    for transacao in transacoes:
+        categoria = transacao["categoria"]
+        valor = transacao["valor"]
+
+        if categoria not in resumo:
+            resumo[categoria] = 0
+
+        resumo[categoria] += valor
+
+    return resumo

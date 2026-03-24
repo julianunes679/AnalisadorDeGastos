@@ -1,3 +1,4 @@
-data,descricao,valor
-2026-01-18,Supermercdo,150.89
-2026-01-12,Uber,10.98
+data,descricao,valor,categoria
+2026-01-18,Supermercado,150.89,Alimentação
+2026-01-12,Uber,10.12,Transporte
+2026-02-05,Restaurante,80.00,Alimentação
