@@ -8,18 +8,24 @@ def carregar_transacoes(caminho):
 
         for linha in leitor:
             try:
-                valor_convertido = float(linha["valor"])
-                linha["valor"] = valor_convertido
+                # valida valor
+                valor = float(linha["valor"])
+                if valor < 0:
+                    raise ValueError
 
+                # valida categoria
                 categoria = linha["categoria"].strip()
                 if not categoria:
-                    raise ValueError(f"Categoria vazia na linha: {linha}")
+                    raise ValueError
 
-                linha["categoria"] = categoria
+                transacoes.append({
+                    "data": linha["data"],
+                    "descricao": linha["descricao"],
+                    "valor": valor,
+                    "categoria": categoria
+                })
 
-                transacoes.append(linha)
-
-            except ValueError:
+            except Exception:
                 raise ValueError(f"Erro ao processar linha: {linha}")
 
     return transacoes

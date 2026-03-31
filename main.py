@@ -1,6 +1,6 @@
 from leitor_csv import carregar_transacoes
 from relatorio import gerar_resumo, gastos_por_mes, gastos_por_categoria
-from grafico import gerar_grafico
+from grafico import grafico_mensal, grafico_categoria
 
 
 def main():
@@ -8,30 +8,32 @@ def main():
         transacoes = carregar_transacoes("dados/extrato.csv")
 
         resumo = gerar_resumo(transacoes)
-        gastos_mensais = gastos_por_mes(transacoes)
-        gastos_categoria = gastos_por_categoria(transacoes)
+        mensal = gastos_por_mes(transacoes)
+        categoria = gastos_por_categoria(transacoes)
 
         print("Resumo Financeiro")
         print("-----------------")
-        print(f"Total gasto: R$ {resumo['total']:.2f}")
-        print(f"Quantidade de transações: {resumo['quantidade']}")
-        print(f"Média por transação: R$ {resumo['media']:.2f}")
+        print(f"Total: R$ {resumo['total']:.2f}")
+        print(f"Qtd: {resumo['quantidade']}")
+        print(f"Média: R$ {resumo['media']:.2f}")
 
-        print("\nGastos por mês")
-        print("--------------")
-        for mes in sorted(gastos_mensais):
-            print(f"{mes} → R$ {gastos_mensais[mes]:.2f}")
+        print("\nPor mês")
+        print("-------")
+        for mes in sorted(mensal):
+            print(f"{mes} → R$ {mensal[mes]:.2f}")
 
-        print("\nGastos por categoria")
-        print("--------------------")
-        for categoria, valor in gastos_categoria.items():
-            print(f"{categoria} → R$ {valor:.2f}")
+        print("\nPor categoria")
+        print("-------------")
+        for cat, val in categoria.items():
+            print(f"{cat} → R$ {val:.2f}")
 
-        gerar_grafico(gastos_mensais)
+        grafico_mensal(mensal)
+        grafico_categoria(categoria)
 
-    except ValueError as erro:
-        print("Erro ao processar o arquivo.")
-        print(erro)
+        print("\nGráficos salvos: grafico_mensal.png e grafico_categoria.png")
+
+    except ValueError as e:
+        print("Erro:", e)
 
 
 if __name__ == "__main__":

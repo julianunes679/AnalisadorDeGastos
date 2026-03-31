@@ -1,15 +1,7 @@
 def gerar_resumo(transacoes):
-    total = 0
-
-    for transacao in transacoes:
-        total += transacao["valor"]
-
+    total = sum(t["valor"] for t in transacoes)
     quantidade = len(transacoes)
-
-    if quantidade > 0:
-        media = total / quantidade
-    else:
-        media = 0
+    media = total / quantidade if quantidade > 0 else 0
 
     return {
         "total": total,
@@ -19,32 +11,20 @@ def gerar_resumo(transacoes):
 
 
 def gastos_por_mes(transacoes):
-    resumo_mensal = {}
+    resumo = {}
 
-    for transacao in transacoes:
-        data = transacao["data"]
-        valor = transacao["valor"]
+    for t in transacoes:
+        mes = t["data"][:7]
+        resumo[mes] = resumo.get(mes, 0) + t["valor"]
 
-        mes = data[:7]
-
-        if mes not in resumo_mensal:
-            resumo_mensal[mes] = 0
-
-        resumo_mensal[mes] += valor
-
-    return resumo_mensal
+    return resumo
 
 
 def gastos_por_categoria(transacoes):
     resumo = {}
 
-    for transacao in transacoes:
-        categoria = transacao["categoria"]
-        valor = transacao["valor"]
-
-        if categoria not in resumo:
-            resumo[categoria] = 0
-
-        resumo[categoria] += valor
+    for t in transacoes:
+        cat = t["categoria"]
+        resumo[cat] = resumo.get(cat, 0) + t["valor"]
 
     return resumo
